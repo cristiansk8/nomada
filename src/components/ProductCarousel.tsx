@@ -11,7 +11,7 @@ import { Product } from "@/app/types"; // Asegúrate de importar el tipo Product
 
   // Función para generar el enlace de WhatsApp
   const generateWhatsAppLink = (productName: string) => {
-    const phoneNumber = "3045304425"; // Tu número sin espacios
+    const phoneNumber = "3122200866"; // Tu número sin espacios
     const encodedMessage = encodeURIComponent(
       `Hola Ritzzi, quiero comprar ${productName} en talla:`
     );

@@ -14,8 +14,8 @@ interface Category {
 export default function Nav() {
   // URLs de redes sociales (podrían venir de un CMS o configuración)
   const socialLinks = {
-    facebook: "https://facebook.com/tuperfil", // Reemplaza con tu URL
-    instagram: "https://www.instagram.com/ritzy_sneakers/" // Reemplaza con tu URL
+    facebook: "https://www.facebook.com/shifty.boards", // Reemplaza con tu URL
+    instagram: "https://www.instagram.com/screenshopnomada/" // Reemplaza con tu URL
   };
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -50,13 +50,13 @@ export default function Nav() {
   }, []);
 
   return (
-    <nav className={`fixed w-full z-50 ${isScrolled ? "bg-white shadow-md" : "bg-white"}`}>
+    <nav className={`fixed w-full z-50 ${isScrolled ? "bg-black shadow-md" : "bg-black"}`}>
       <div className="max-w-6xl mx-auto px-4">
         <div className="flex justify-between items-center py-4">
           {/* Logo */}
           <Link href="/" className="flex items-center">
             <Image
-              src="/logo.png"
+              src="/logo.jpg"
               alt="Ritzi"
               width={160}
               height={40}
@@ -73,7 +73,7 @@ export default function Nav() {
                   <li key={category.id}>
                     <Link
                       href={`#${category.slug}`}
-                      className="text-lg text-gray-800 hover:text-blue-600 transition"
+                      className="text-lg text-white hover:text-blue-600 transition"
                     >
                       {category.name}
                     </Link>
@@ -88,7 +88,7 @@ export default function Nav() {
                 href={socialLinks.facebook} 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="text-gray-600 hover:text-blue-600 transition"
+                className="text-white hover:text-blue-600 transition"
                 aria-label="Facebook"
               >
                 <svg className="w-10 h-10" fill="currentColor" viewBox="0 0 24 24">
@@ -99,7 +99,7 @@ export default function Nav() {
                 href={socialLinks.instagram} 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="text-gray-600 hover:text-pink-600 transition"
+                className="text-white hover:text-pink-600 transition"
                 aria-label="Instagram"
               >
                 <svg className="w-10 h-10" fill="currentColor" viewBox="0 0 24 24">
@@ -140,9 +140,16 @@ export default function Nav() {
             onClick={(e) => e.stopPropagation()}
           >
             <div className="p-4 border-b">
-              <Link href="/" className="text-2xl font-bold text-gray-800">
-                Ritzi
-              </Link>
+            <Link href="/" className="flex items-center">
+            <Image
+              src="/logo.jpg"
+              alt="Ritzi"
+              width={160}
+              height={40}
+              className="h-17 w-auto"
+              priority
+            />
+          </Link>
             </div>
             <ul className="p-4 space-y-6">
               {categories.map((category) => (
