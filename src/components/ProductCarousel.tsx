@@ -13,7 +13,7 @@ import { Product } from "@/app/types"; // Asegúrate de importar el tipo Product
   const generateWhatsAppLink = (productName: string) => {
     const phoneNumber = "3122200866"; // Tu número sin espacios
     const encodedMessage = encodeURIComponent(
-      `Hola Ritzzi, quiero comprar ${productName} en talla:`
+      `Hola Nomada, quiero comprar ${productName} en talla:`
     );
     return `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
   };
