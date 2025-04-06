@@ -6,10 +6,10 @@ import { ApiSlideResponse, getHomeSlides } from "@/lib/sliderService";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: 'Inicio | Ritzi Sneakers - Calzado Premium en Colombia',
+  title: 'Inicio | Nomada Screenshop - Viste Premium en Colombia',
   description: 'Descubre nuestra colección exclusiva de sneakers para hombre y mujer. Envíos a todo Colombia.',
   alternates: {
-    canonical: 'https://ritzyshoes.vercel.app',
+    canonical: 'https://nomadashop.com.co/',
   },
   keywords: ['sneakers exclusivos', 'zapatillas premium Colombia', 'calzado deportivo de lujo'],
 }

@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next'
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://ritzyshoes.vercel.app'
+  const baseUrl = 'https://nomadashop.com.co/'
   const secciones = [
     '',           // Home (sin hash)
     '#adidas',    // Marcas

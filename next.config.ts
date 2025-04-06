@@ -5,7 +5,7 @@ const nextConfig: NextConfig = {
   images: {
     domains: [
       'toryskateshop.com',
-      'ritzyshoes.vercel.app'
+      'https://nomadashop.com.co/'
     ],
     remotePatterns: [
       {

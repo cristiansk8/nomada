@@ -8,26 +8,26 @@ import Footer from "@/components/footer";
 
 export const metadata: Metadata = {
   title: {
-    default: 'Ritzi Sneakers | Calzado Premium en Colombia',
+    default: 'Nomada screenshop | Calzado y ropa Premium en Colombia',
     template: '%s | Ritzi Sneakers'
   },
-  description: 'Encuentra los sneakers más exclusivos y cómodos. Calzado premium para hombre y mujer con envíos a todo Colombia.',
+  description: 'Encuentra los sneakers más exclusivos y cómodos. viste premium para hombre y mujer con envíos a todo Colombia.',
   keywords: ['sneakers', 'zapatillas premium', 'calzado deportivo', 'moda urbana', 'Colombia'],
   openGraph: {
     type: 'website',
     locale: 'es_CO',
-    url: 'https://ritzyshoes.vercel.app',
+    url: 'https://nomadashop.com.co/',
     siteName: 'Ritzi Sneakers',
     images: [{
       url: '/logo.png',
       width: 1200,
       height: 630,
-      alt: 'Ritzi Sneakers - Calzado Premium'
+      alt: 'Nomada screenshop - Viste Premium'
     }]
   },
   twitter: {
     card: 'summary_large_image',
-    creator: '@ritzi_sneakers'
+    creator: '@nomada'
   },
   robots: {
     index: true,

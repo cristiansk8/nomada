@@ -12,8 +12,8 @@ export default function robots(): MetadataRoute.Robots {
         '/admin/'
       ],
     },
-    sitemap: 'https://ritzyshoes.vercel.app/sitemap.xml',
+    sitemap: 'https://nomadashop.com.co/sitemap.xml',
     // Opcional: Host alternativo (si tienes dominio primario)
-    host: 'https://ritzyshoes.vercel.app'
+    host: 'https://nomadashop.com.co/'
   }
 }
