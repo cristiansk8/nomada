@@ -13,6 +13,11 @@ export const metadata: Metadata = {
   },
   description: 'Encuentra los sneakers más exclusivos y cómodos. viste premium para hombre y mujer con envíos a todo Colombia.',
   keywords: ['sneakers', 'zapatillas premium', 'calzado deportivo', 'moda urbana', 'Colombia'],
+  icons: {
+    icon: '/logo.jpg',  // Ruta a tu SVG en la carpeta public
+    shortcut: '/logo.jpg',  // Fallback PNG
+    apple: '/apple-touch-icon.png',  // Para dispositivos Apple
+  },
   openGraph: {
     type: 'website',
     locale: 'es_CO',
