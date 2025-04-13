@@ -39,7 +39,7 @@ const ProductCarousel: React.FC<ProductCarouselProps> = ({ products }) => {
 
   const generateWhatsAppLink = (productName: string) => {
     const encodedMessage = encodeURIComponent(
-      `Hola Ritzzi, quiero comprar ${productName} en talla:`
+      `Hola Nomada, quiero comprar ${productName} en talla:`
     );
     return `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
   };
