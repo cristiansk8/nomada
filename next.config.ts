@@ -3,15 +3,17 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   transpilePackages: ['swiper'],
   images: {
-    domains: [
-      'toryskateshop.com',
-      'https://nomadashop.com.co/'
-    ],
     remotePatterns: [
       {
         protocol: 'https',
         hostname: 'toryskateshop.com',
         pathname: '/wp-content/uploads/**',
+      },
+      // Para las imágenes de Google
+      {
+        protocol: 'https',
+        hostname: 'lh3.googleusercontent.com',
+        pathname: '/**'
       }
     ],
     minimumCacheTTL: 60,
