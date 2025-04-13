@@ -1,22 +1,12 @@
-"use client"; // Indica que este es un componente del lado del cliente
-
-import React from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import Image from "next/image";
-import { Product } from "@/app/types"; // Asegúrate de importar el tipo Product
-
-  // Función para generar el enlace de WhatsApp
-  const generateWhatsAppLink = (productName: string) => {
-    const phoneNumber = "3122200866"; // Tu número sin espacios
-    const encodedMessage = encodeURIComponent(
-      `Hola Nomada, quiero comprar ${productName} en talla:`
-    );
-    return `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
-  };
+import { Product } from "@/app/types";
 
 type ProductWithImages = Product & {
   images: { src: string }[];
@@ -27,6 +17,33 @@ interface ProductCarouselProps {
 }
 
 const ProductCarousel: React.FC<ProductCarouselProps> = ({ products }) => {
+  const [phoneNumber, setPhoneNumber] = useState("3045304425"); // Valor por defecto
+
+  // Carga el teléfono sin afectar el render inicial
+  useEffect(() => {
+    const fetchPhone = async () => {
+      try {
+        const res = await fetch('https://tiyo.vercel.app/api/user?email=cdpsk8@gmail.com');
+        const data = await res.json();
+
+        if (data.user?.phone) { // Modificado para acceder a data.user
+          const cleanPhone = data.user.phone.replace(/\D/g, '');
+          setPhoneNumber(cleanPhone);
+        }
+      } catch (error) {
+        console.error("Error completo:", error); // Más detalle
+      }
+    };
+    fetchPhone();
+  }, []);
+
+  const generateWhatsAppLink = (productName: string) => {
+    const encodedMessage = encodeURIComponent(
+      `Hola Ritzzi, quiero comprar ${productName} en talla:`
+    );
+    return `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+  };
+
   const filteredProducts = products.filter(
     (product): product is ProductWithImages =>
       product.images !== undefined && product.images.length > 0
@@ -56,26 +73,25 @@ const ProductCarousel: React.FC<ProductCarouselProps> = ({ products }) => {
           1024: { slidesPerView: 3 },
           1280: { slidesPerView: 4 },
         }}
+        className="!overflow-visible" /* Importante para mantener el layout */
       >
         {filteredProducts.map((product) => (
-          <SwiperSlide key={product.id}>
+          <SwiperSlide key={product.id} className="!h-auto">
             <div className="border rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col h-full">
-              {/* Imagen del producto */}
-              <div className="relative h-72">
+              <div className="relative h-72 w-full">
                 <Image
                   src={product.images[0].src}
                   alt={product.name}
-                  layout="fill"
-                  objectFit="cover"
+                  fill
+                  style={{ objectFit: 'cover' }}
                   className="hover:scale-105 transition-transform duration-300"
+                  sizes="(max-width: 768px) 100vw, 33vw"
                 />
               </div>
-              
-              {/* Contenido de la card */}
+
               <div className="p-4 flex flex-col flex-grow">
                 <h3 className="text-lg font-semibold mb-4">{product.name}</h3>
-                
-                {/* Botón Comprar - centrado y con margen superior automático */}
+
                 <div className="mt-auto">
                   <a
                     href={generateWhatsAppLink(product.name)}
