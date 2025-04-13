@@ -46,7 +46,7 @@ export default function Nav() {
   useEffect(() => {
     const fetchSocials = async () => {
       try {
-        const res = await fetch("https://tiyo.vercel.app/api/user?email=cdpsk8@gmail.com");
+        const res = await fetch(`https://tiyo.vercel.app/api/user?email=${process.env.NEXT_PUBLIC_userEmail}`);
         const data = await res.json();
         if (data.user) {
           setSocialLinks({
