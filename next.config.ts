@@ -17,7 +17,7 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'https://tiyo.vercel.app',
+        hostname: 'https://vendetiyo.vercel.app',
         pathname: '/**'
       }
     ],

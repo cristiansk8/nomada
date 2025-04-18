@@ -4,6 +4,8 @@ import api from "@/lib/woocommerce";
 import HeroCarousel from "@/components/HeroCarousel";
 import { ApiSlideResponse, getHomeSlides } from "@/lib/sliderService";
 import { Metadata } from "next";
+import getCategories from "@/components/getCategories";
+import getUserActiveCategories from "@/components/getUserActiveCategories";
 
 export const metadata: Metadata = {
   title: 'Inicio | Nomada Screenshop - Viste Premium en Colombia',
@@ -12,9 +14,9 @@ export const metadata: Metadata = {
     canonical: 'https://nomadashop.com.co/',
   },
   keywords: ['sneakers exclusivos', 'zapatillas premium Colombia', 'calzado deportivo de lujo'],
-}
+};
 
-
+// Función para traer productos por categoría
 async function getProductsByCategory(categoryId: number): Promise<Product[]> {
   try {
     const response = await api.get<Product[]>("products", {
@@ -36,45 +38,55 @@ interface CategoryProducts {
 }
 
 export default async function Home() {
-  // Obtener todos los datos en paralelo
-  const [slides, nikeProducts, dcProducts, vansProducts, adidasProducts, runningProducts] = await Promise.all([
+  const [slides, allCategories, activeCategories] = await Promise.all([
     getHomeSlides(),
-    getProductsByCategory(16), // Nike SB
-    getProductsByCategory(17), // DC shoes
-    getProductsByCategory(20), // Vans
-    getProductsByCategory(18), // Adidas
-    getProductsByCategory(21), // Running
+    getCategories(),
+    getUserActiveCategories(), // el nuevo endpoint que filtramos
   ]);
-  console.log('Datos de slides:', slides);
-// En la transformación de banners, añade el tipo ApiSlideResponse:
-const banners = slides.map((slide: ApiSlideResponse) => ({
-  id: slide.id,
-  imageDesktop: slide.desktop.url,
-  imageMobile: slide.mobile.url,
-  altText: slide.desktop.alt || `Banner ${slide.id}`,
-  linkUrl: slide.categoria ? `/#${slide.categoria.toLowerCase()}` : slide.link || '#'
-}));
-  // Organizar categorías
-  const categories: CategoryProducts[] = [
-    { id: "nike", name: "Nike SB", products: nikeProducts },
-    { id: "dc", name: "DC Shoes", products: dcProducts },
-    { id: "vans", name: "Vans", products: vansProducts },
-    { id: "adidas", name: "Adidas", products: adidasProducts },
-    { id: "running", name: "Running", products: runningProducts }
-  ];
+
+  // IDs de las categorías activas del usuario
+  const activeCategoryIds = new Set(activeCategories.map((cat) => Number(cat.categoryId)));
+
+  // Filtrar categorías que están activas
+  const filteredCategories = allCategories.filter(cat =>
+    activeCategoryIds.has(cat.id)
+  );
+
+  // Traer productos de las categorías activas
+  const categoriesWithProducts: CategoryProducts[] = await Promise.all(
+    filteredCategories.map(async (cat) => {
+      const products = await getProductsByCategory(cat.id);
+      return {
+        id: cat.slug,
+        name: cat.name,
+        products,
+      };
+    })
+  );
+
+  // Generar banners desde los slides
+  const banners = slides.map((slide: ApiSlideResponse) => ({
+    id: slide.id,
+    imageDesktop: slide.desktop.url,
+    imageMobile: slide.mobile.url,
+    altText: slide.desktop.alt || `Banner ${slide.id}`,
+    linkUrl: slide.categoria ? `/#${slide.categoria.toLowerCase()}` : slide.link || '#',
+  }));
 
   return (
     <div className="pt-26">
       {/* Hero Carousel */}
       <HeroCarousel banners={banners} />
 
-      {/* Renderizado dinámico de categorías */}
-      {categories.map((category) => (
-        <div key={category.id} id={category.id} className="py-8">
-          <h2 className="text-center font-bold text-3xl">{category.name}</h2>
-          <ProductCarousel products={category.products} />
-        </div>
-      ))}
+      {/* Renderizar categorías activas dinámicamente */}
+      {categoriesWithProducts.map((category) =>
+        category.products.length > 0 && (
+          <div key={category.id} id={category.id} className="py-8">
+            <h2 className="text-center font-bold text-3xl">{category.name}</h2>
+            <ProductCarousel products={category.products} />
+          </div>
+        )
+      )}
     </div>
   );
 }

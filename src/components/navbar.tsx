@@ -46,7 +46,7 @@ export default function Nav() {
   useEffect(() => {
     const fetchSocials = async () => {
       try {
-        const res = await fetch(`https://tiyo.vercel.app/api/user?email=${process.env.NEXT_PUBLIC_userEmail}`);
+        const res = await fetch(`https://vendetiyo.vercel.app/api/user?email=${process.env.NEXT_PUBLIC_userEmail}`);
         const data = await res.json();
         if (data.user) {
           setSocialLinks({
@@ -61,8 +61,6 @@ export default function Nav() {
     };
     fetchSocials();
   }, []);
-  console.log("logo"+socialLinks.facebook)
-
   return (
     <nav className={`fixed w-full z-50 ${isScrolled ? "bg-black shadow-md" : "bg-black"}`}>
       <div className="max-w-6xl mx-auto px-4">
