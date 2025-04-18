@@ -37,4 +37,4 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 
 ## 🚀 Despliegue en Vercel
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FTU-REPO%2Ftiyo-final&project-name=tiyo-final&repository-name=tiyo-final&framework=next.js)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fcristiansk8%2Fnomada&project-name=nomada-project&repository-name=nomada-deployment&envDescription=Configure%20las%20variables%20de%20entorno&env=NEXT_PUBLIC_API_URL,DB_URL&demo-title=Nomada%20Demo&demo-description=Demo%20de%20Nomada%20desplegado%20en%20Vercel&framework=next.js)
