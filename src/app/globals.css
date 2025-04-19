@@ -30,3 +30,17 @@ html {
 }
 
 
+/* Agrega este código a tu archivo de estilos CSS global */
+.whatsapp-button {
+  background-color: #25d366; /* Color de fondo normal */
+  color: #ffffff; /* Color de texto */
+  padding: 12px 24px;
+  border-radius: 8px;
+  display: block;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+.whatsapp-button:hover {
+  background-color: #25d366 !important; /* Color de fondo al hacer hover (color más oscuro de WhatsApp) */
+  color: #ffffff !important; /* Color de texto */
+}
