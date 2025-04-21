@@ -56,7 +56,7 @@ const ProductCarousel: React.FC<ProductCarouselProps> = ({ products }) => {
     const encodedMessage = encodeURIComponent(
       `Hola ${name}, quiero comprar ${productName} en talla:`
     );
-    return `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+    return `https://wa.me/+57${phoneNumber}?text=${encodedMessage}`;
   };
 
   const filteredProducts = products.filter(
