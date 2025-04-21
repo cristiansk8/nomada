@@ -17,7 +17,7 @@ interface ProductCarouselProps {
 }
 
 const ProductCarousel: React.FC<ProductCarouselProps> = ({ products }) => {
-  const [phoneNumber, setPhoneNumber] = useState("3045304425");
+  const [phoneNumber, setPhoneNumber] = useState("3172250090");
   const [colorWha, setColorWha] = useState("#25D366"); // Default WhatsApp green
   const [colorText, setColorText] = useState("#ffffff"); // Default white text
 
