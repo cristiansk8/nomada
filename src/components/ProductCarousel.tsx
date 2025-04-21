@@ -20,6 +20,7 @@ const ProductCarousel: React.FC<ProductCarouselProps> = ({ products }) => {
   const [phoneNumber, setPhoneNumber] = useState("3172250090");
   const [colorWha, setColorWha] = useState("#25D366"); // Default WhatsApp green
   const [colorText, setColorText] = useState("#ffffff"); // Default white text
+  const [name, setName] = useState("shoptiyo"); // Default white text
 
   useEffect(() => {
     const fetchPhone = async () => {
@@ -41,6 +42,9 @@ const ProductCarousel: React.FC<ProductCarouselProps> = ({ products }) => {
         if (data.user?.colorText) {
           setColorText(data.user.colorText);
         }
+        if (data.user?.name) {
+          setName(data.user.name);
+        }
       } catch (error) {
         console.error("Error completo:", error);
       }
@@ -50,7 +54,7 @@ const ProductCarousel: React.FC<ProductCarouselProps> = ({ products }) => {
 
   const generateWhatsAppLink = (productName: string) => {
     const encodedMessage = encodeURIComponent(
-      `Hola Nomada, quiero comprar ${productName} en talla:`
+      `Hola ${name}, quiero comprar ${productName} en talla:`
     );
     return `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
   };

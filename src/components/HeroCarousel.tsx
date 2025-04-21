@@ -66,7 +66,7 @@ export default function HeroCarousel({ banners }: HeroCarouselProps) {
                       className="object-cover"
                       priority={index < 3}
                       quality={90}
-                      sizes="(max-width: 1600px) 100vw, (max-width: 1800px) 50vw, 33vw"
+                      sizes="(max-width: 1920px) 100vw, (max-width: 1800px) 50vw, 33vw"
                       itemProp="contentUrl"
                     />
                     <meta itemProp="width" content="1200" />
