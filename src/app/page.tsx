@@ -8,10 +8,10 @@ import getCategories from "@/components/getCategories";
 import getUserActiveCategories from "@/components/getUserActiveCategories";
 
 export const metadata: Metadata = {
-  title: 'Inicio | Nomada Screenshop - Viste Premium en Colombia',
+  title: 'Inicio | Shop - Viste Premium en Colombia',
   description: 'Descubre nuestra colección exclusiva de sneakers para hombre y mujer. Envíos a todo Colombia.',
   alternates: {
-    canonical: 'https://nomadashop.com.co/',
+    canonical: '',
   },
   keywords: ['sneakers exclusivos', 'zapatillas premium Colombia', 'calzado deportivo de lujo'],
 };
