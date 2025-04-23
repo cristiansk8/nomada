@@ -8,7 +8,7 @@ import Footer from "@/components/footer";
 
 export const metadata: Metadata = {
   title: {
-    default: 'Nomada screenshop | Calzado y ropa Premium en Colombia',
+    default: 'Shop | Calzado y ropa Premium en Colombia',
     template: '%s | Ritzi Sneakers'
   },
   description: 'Encuentra los sneakers más exclusivos y cómodos. viste premium para hombre y mujer con envíos a todo Colombia.',
