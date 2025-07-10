@@ -3,12 +3,28 @@ export interface ProductImage {
   alt?: string;
 }
 
-export interface Product {
-  id: string;
+export interface ProductCategory {
+  id: number;
   name: string;
   slug: string;
-  images?: ProductImage[]; // Images es opcional
-  // ... otras propiedades
+}
+
+export interface Product {
+  id: string | number;
+  name: string;
+  slug: string;
+  description?: string;
+  short_description?: string;
+  price: string;
+  regular_price: string;
+  sale_price: string;
+  on_sale: boolean;
+  stock_status: 'instock' | 'outofstock' | 'onbackorder';
+  stock_quantity?: number;
+  categories?: ProductCategory[];
+  images?: ProductImage[];
+  permalink?: string;
+  status: string;
 }
 export interface Slide {
   id: string; // Ahora es obligatorio

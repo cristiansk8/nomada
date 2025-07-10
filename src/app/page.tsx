@@ -1,11 +1,8 @@
+import HeroCarousel from "@/components/HeroCarousel";
 import ProductCarousel from "@/components/ProductCarousel";
 import { Product } from "@/app/types";
 import api from "@/lib/woocommerce";
-import HeroCarousel from "@/components/HeroCarousel";
-import { ApiSlideResponse, getHomeSlides } from "@/lib/sliderService";
 import { Metadata } from "next";
-import getCategories from "@/components/getCategories";
-import getUserActiveCategories from "@/components/getUserActiveCategories";
 
 export const metadata: Metadata = {
   title: 'Inicio | Shop - Viste Premium en Colombia',
@@ -17,75 +14,71 @@ export const metadata: Metadata = {
 };
 
 // Función para traer productos por categoría
-async function getProductsByCategory(categoryId: number): Promise<Product[]> {
+async function getProductsByCategory(categoryId?: number): Promise<Product[]> {
   try {
-    const response = await api.get<Product[]>("products", {
-      per_page: 10,
-      category: categoryId.toString(),
+    const params: Record<string, string | number> = {
+      per_page: 8,
       status: "publish",
-    });
-    return response.data || [];
+    };
+    
+    if (categoryId) {
+      params.category = categoryId.toString();
+    }
+    
+    console.log(`🔄 Obteniendo productos de categoría ${categoryId || 'todas'}...`);
+    const response = await api.get<Product[]>("products", params);
+    
+    if (response.data && response.data.length > 0) {
+      console.log(`✅ Obtenidos ${response.data.length} productos`);
+      return response.data;
+    }
+    
+    console.log(`⚠️ No se encontraron productos`);
+    return [];
   } catch (error) {
-    console.error(`Error al obtener productos de la categoría ${categoryId}:`, error);
+    console.error("❌ Error al obtener productos:", error);
     return [];
   }
 }
 
-interface CategoryProducts {
-  id: string;
-  name: string;
-  products: Product[];
-}
-
 export default async function Home() {
-  const [slides, allCategories, activeCategories] = await Promise.all([
-    getHomeSlides(),
-    getCategories(),
-    getUserActiveCategories(), // el nuevo endpoint que filtramos
-  ]);
-
-  // IDs de las categorías activas del usuario
-  const activeCategoryIds = new Set(activeCategories.map((cat) => Number(cat.categoryId)));
-
-  // Filtrar categorías que están activas
-  const filteredCategories = allCategories.filter(cat =>
-    activeCategoryIds.has(cat.id)
-  );
-
-  // Traer productos de las categorías activas
-  const categoriesWithProducts: CategoryProducts[] = await Promise.all(
-    filteredCategories.map(async (cat) => {
-      const products = await getProductsByCategory(cat.id);
-      return {
-        id: cat.slug,
-        name: cat.name,
-        products,
-      };
-    })
-  );
-
-  // Generar banners desde los slides
-  const banners = slides.map((slide: ApiSlideResponse) => ({
-    id: slide.id,
-    imageDesktop: slide.desktop.url,
-    imageMobile: slide.mobile.url,
-    altText: slide.desktop.alt || `Banner ${slide.id}`,
-    linkUrl: slide.categoria ? `/#${slide.categoria.toLowerCase()}` : slide.link || '#',
-  }));
+  // Obtener productos destacados (sin categoría específica)
+  const featuredProducts = await getProductsByCategory();
 
   return (
-    <div className="pt-26">
-      {/* Hero Carousel */}
-      <HeroCarousel banners={banners} />
-
-      {/* Renderizar categorías activas dinámicamente */}
-      {categoriesWithProducts.map((category) =>
-        category.products.length > 0 && (
-          <div key={category.id} id={category.id} className="py-8">
-            <h2 className="text-center font-bold text-3xl">{category.name}</h2>
-            <ProductCarousel products={category.products} />
+    <div>
+      {/* Hero Carousel - Slider de videos */}
+      <HeroCarousel />
+      
+      {/* Sección de productos destacados */}
+      {featuredProducts.length > 0 && (
+        <section className="py-12 sm:py-16 lg:py-20 bg-gray-50">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-8 sm:mb-12">
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
+                Productos Destacados
+              </h2>
+              <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto">
+                Descubre nuestra selección de productos premium
+              </p>
+            </div>
+            <ProductCarousel products={featuredProducts} />
           </div>
-        )
+        </section>
+      )}
+      
+      {/* Mensaje temporal si no hay productos */}
+      {featuredProducts.length === 0 && (
+        <div className="pt-20 sm:pt-24 pb-16 px-4 text-center bg-gray-50">
+          <div className="max-w-2xl mx-auto">
+            <h2 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-4">
+              🚧 Próximamente: Productos por Categoría
+            </h2>
+            <p className="text-gray-600">
+              Los carruseles de productos se integrarán siguiendo el plan documentado.
+            </p>
+          </div>
+        </div>
       )}
     </div>
   );
