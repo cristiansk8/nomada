@@ -1,15 +1,14 @@
-import { NextResponse } from 'next/server';
-
-export async function GET() {
+'use server'
+export async function getProduct(){
   const consumer_key2 = process.env.CONSUMER_KEY;
   const consumer_secret2 = process.env.CONSUMER_SECRET;
   const api=process.env.urlAPI;
 
   // Verifica que las credenciales estén definidas
   if (!consumer_key2 || !consumer_secret2) {
-    return NextResponse.json(
-      { message: 'Consumer key or secret is missing' },
-      { status: 500 }
+    return (
+      { message: 'Consumer key or secret is missing' ,
+       status: 500 }
     );
   }
 
@@ -23,20 +22,20 @@ export async function GET() {
     if (!response.ok) {
       // Devuelve un mensaje de error con el estado de la respuesta
       const errorMessage = `Error fetching products: ${response.statusText}`;
-      return NextResponse.json(
-        { message: errorMessage },
-        { status: response.status }
+      return (
+        { message: errorMessage ,
+        status: response.status }
       );
     }
 
     const data = await response.json();
-    return NextResponse.json(data);
+    return (data);
   } catch (error) {
     // Usa la variable `error` para devolver un mensaje más detallado
-    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-    return NextResponse.json(
-      { message: 'Error fetching products', error: errorMessage },
-      { status: 500 }
+    const errorMessage = error instanceof Error ? error : 'Unknown error';
+    return(
+      { message: 'Error fetching products', error: errorMessage ,
+      status: 500 }
     );
   }
 }
