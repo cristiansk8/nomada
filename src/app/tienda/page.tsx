@@ -20,21 +20,22 @@ type PageProps = {
   searchParams: Promise<{ categoria?: string; buscar?: string; }>;
 };
 
+interface ProductParams {
+  per_page: number;
+  status: string;
+  category?: string;
+  search?: string;
+}
+
 async function getProducts(categoryId?: string, searchTerm?: string): Promise<Product[]> {
   try {
-    const params: any = {
+    const params: ProductParams = {
       per_page: 100,
       status: "publish",
     };
-    
-    if (categoryId) {
-      params.category = categoryId;
-    }
-    
-    if (searchTerm) {
-      params.search = searchTerm;
-    }
-    
+    if (categoryId) params.category = categoryId;
+    if (searchTerm) params.search = searchTerm;
+
     console.log('🔍 Obteniendo productos con parámetros:', params);
     const response = await api.get<Product[]>("products", params);
     console.log(`✅ Productos obtenidos: ${response.data?.length || 0}`);
@@ -62,11 +63,11 @@ export default async function TiendaPage({ searchParams }: PageProps) {
   const params = await searchParams;
   const categoryId = params.categoria;
   const searchTerm = params.buscar;
-  
+
   const products = await getProducts(categoryId, searchTerm);
   const categories = await getCategories();
-  
-  const currentCategory = categoryId 
+
+  const currentCategory = categoryId
     ? categories.find(cat => cat.id.toString() === categoryId || cat.slug === categoryId)
     : null;
 
@@ -78,13 +79,13 @@ export default async function TiendaPage({ searchParams }: PageProps) {
             {currentCategory ? currentCategory.name : 'Nuestros Productos'}
             {searchTerm && (
               <span className="block text-lg sm:text-xl font-normal text-gray-600 mt-2">
-                Resultados para: "{searchTerm}"
+                Resultados para: &quot;{searchTerm}&quot;
               </span>
             )}
           </h1>
           <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto">
-            {currentCategory 
-              ? `Explora nuestra colección de ${currentCategory.name.toLowerCase()}` 
+            {currentCategory
+              ? `Explora nuestra colección de ${currentCategory.name.toLowerCase()}`
               : searchTerm
                 ? `Encontramos ${products.length} producto${products.length !== 1 ? 's' : ''} para tu búsqueda`
                 : 'Descubre nuestra colección completa'
@@ -122,26 +123,26 @@ export default async function TiendaPage({ searchParams }: PageProps) {
               )}
             </div>
           </form>
-          
+
           {/* Category filters */}
           <div className="mt-4 flex flex-wrap gap-2">
             <Link
               href="/tienda"
               className={`px-3 py-1 rounded-full text-sm transition-colors ${
-                !categoryId 
-                  ? 'bg-blue-600 text-white' 
+                !categoryId
+                  ? 'bg-blue-600 text-white'
                   : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
               }`}
             >
               Todas
             </Link>
-            {categories.map((category) => (
+            {categories.map((category: Category) => (
               <Link
                 key={category.id}
                 href={`/tienda?categoria=${category.id}`}
                 className={`px-3 py-1 rounded-full text-sm transition-colors ${
                   categoryId === category.id.toString()
-                    ? 'bg-blue-600 text-white' 
+                    ? 'bg-blue-600 text-white'
                     : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
                 }`}
               >
@@ -150,9 +151,9 @@ export default async function TiendaPage({ searchParams }: PageProps) {
             ))}
           </div>
         </div>
-        
+
         <div className="mt-8 grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6">
-          {products.map((product) => (
+          {products.map((product: Product) => (
             <Link
               key={product.id}
               href={`/productos/${product.slug}`}
@@ -177,7 +178,7 @@ export default async function TiendaPage({ searchParams }: PageProps) {
                   </div>
                 )}
               </div>
-              
+
               <div className="p-3 sm:p-4">
                 <h3 className="font-medium text-gray-900 mb-2 group-hover:text-blue-600 text-sm sm:text-base line-clamp-2">
                   {product.name}
@@ -200,8 +201,8 @@ export default async function TiendaPage({ searchParams }: PageProps) {
                     )}
                   </div>
                   <span className={`text-xs px-2 py-1 rounded-full ${
-                    product.stock_status === 'instock' 
-                      ? 'text-green-700 bg-green-100' 
+                    product.stock_status === 'instock'
+                      ? 'text-green-700 bg-green-100'
                       : 'text-red-700 bg-red-100'
                   }`}>
                     {product.stock_status === 'instock' ? 'Disponible' : 'Agotado'}
@@ -220,18 +221,18 @@ export default async function TiendaPage({ searchParams }: PageProps) {
               </svg>
             </div>
             <h3 className="text-lg font-medium text-gray-900 mb-2">
-              {searchTerm 
-                ? `No se encontraron productos para "${searchTerm}"` 
-                : currentCategory 
-                  ? `No hay productos disponibles en ${currentCategory.name}` 
+              {searchTerm
+                ? `No se encontraron productos para &quot;${searchTerm}&quot;`
+                : currentCategory
+                  ? `No hay productos disponibles en ${currentCategory.name}`
                   : 'No hay productos disponibles'
               }
             </h3>
             <p className="text-gray-600 mb-6">
-              {searchTerm 
-                ? 'Intenta con otros términos de búsqueda o explora nuestras categorías.' 
-                : currentCategory 
-                  ? 'Intenta con otra categoría o vuelve más tarde.' 
+              {searchTerm
+                ? 'Intenta con otros términos de búsqueda o explora nuestras categorías.'
+                : currentCategory
+                  ? 'Intenta con otra categoría o vuelve más tarde.'
                   : 'Vuelve más tarde para ver nuestros productos.'
               }
             </p>

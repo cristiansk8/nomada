@@ -151,7 +151,7 @@ export default function SearchAndFilter({
           )}
           {searchTerm && (
             <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
-              Búsqueda: "{searchTerm}"
+               Búsqueda: &quot;{searchTerm}&quot;
               <button
                 onClick={clearSearch}
                 className="ml-2 text-green-600 hover:text-green-800"

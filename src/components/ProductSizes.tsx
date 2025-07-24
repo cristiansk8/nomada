@@ -26,7 +26,7 @@ export default function ProductSizes({ productId }: ProductSizesProps) {
           setVariations(result);
           setError(null);
         }
-      } catch (err) {
+      } catch {
         setError("Error al cargar las tallas");
         setVariations(null);
       } finally {

@@ -1,1 +1,1 @@
-export { getProduct } from "./get-product.action";
+export { getProductBySlug } from "./get-product.action";
