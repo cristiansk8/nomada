@@ -20,17 +20,10 @@ type PageProps = {
   searchParams: Promise<{ categoria?: string; buscar?: string; }>;
 };
 
-interface ProductParams {
-  per_page: number;
-  status: string;
-  category?: string;
-  search?: string;
-}
-
 async function getProducts(categoryId?: string, searchTerm?: string): Promise<Product[]> {
   try {
-    const params: ProductParams = {
-      per_page: 100,
+    const params: Record<string, string> = {
+      per_page: "100",
       status: "publish",
     };
     if (categoryId) params.category = categoryId;
