@@ -8,10 +8,10 @@ export interface UserActiveCategory {
   }
   
   export default async function getUserActiveCategories(): Promise<UserActiveCategory[]> {
-    const email = process.env.NEXT_PUBLIC_userEmail;
+    const email = process.env.userEmail;
   
     if (!email) {
-      console.error("Falta la variable de entorno NEXT_PUBLIC_USER_EMAIL");
+      console.error("Falta la variable de entorno userEmail");
       return [];
     }
   

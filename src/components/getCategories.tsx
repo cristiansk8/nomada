@@ -7,16 +7,16 @@ export interface Category {
   
   export default async function getCategories(): Promise<Category[]> {
     // 1. Validación robusta de variables de entorno
-    const baseUrl = process.env.NEXT_PUBLIC_WOOCOMMERCE_URL;
-    const consumerKey = process.env.NEXT_PUBLIC_CONSUMER_KEY;
-    const consumerSecret = process.env.NEXT_PUBLIC_CONSUMER_SECRET;
+    const baseUrl = process.env.urlAPI;
+    const consumerKey = process.env.CONSUMER_KEY;
+    const consumerSecret = process.env.CONSUMER_SECRET;
   
     if (!baseUrl || !consumerKey || !consumerSecret) {
       console.error('Missing required environment variables:');
       console.table({
-        NEXT_PUBLIC_WOOCOMMERCE_URL: baseUrl,
-        NEXT_PUBLIC_CONSUMER_KEY: !!consumerKey,
-        NEXT_PUBLIC_CONSUMER_SECRET: !!consumerSecret
+        WOOCOMMERCE_URL: baseUrl,
+        CONSUMER_KEY: !!consumerKey,
+        CONSUMER_SECRET: !!consumerSecret
       });
       return [];
     }

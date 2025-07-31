@@ -28,7 +28,11 @@ export async function generateMetadata(props: Props) {
 export default async function ProductPage(props: Props) {
   const params = await props.params;
   const slug = params.slug;
+  // DEBUG: Log slug recibido
+  console.log('[ProductPage] slug recibido:', slug);
   const product = await getProductBySlug(slug);
+  // DEBUG: Log producto recibido
+  console.log('[ProductPage] producto recibido:', product);
 
   // Si hay error o no se encontró el producto
   if (!product || 'message' in product) {

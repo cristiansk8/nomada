@@ -48,7 +48,7 @@ export default function Nav() {
   useEffect(() => {
     const fetchSocials = async () => {
       try {
-        const res = await fetch(`https://vendetiyo.vercel.app/api/user?email=${process.env.NEXT_PUBLIC_userEmail}`);
+        const res = await fetch(`https://vendetiyo.vercel.app/api/user?email=${process.env.userEmail}`);
         const data = await res.json();
         if (data.user) {
           setSocialLinks({

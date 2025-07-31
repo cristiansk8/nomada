@@ -26,7 +26,7 @@ const ProductCarousel: React.FC<ProductCarouselProps> = ({ products }) => {
     const fetchPhone = async () => {
       try {
         const res = await fetch(
-          `https://vendetiyo.vercel.app/api/user?email=${process.env.NEXT_PUBLIC_userEmail}`
+          `https://vendetiyo.vercel.app/api/user?email=${process.env.userEmail}`
         );
         const data = await res.json();
 
