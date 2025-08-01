@@ -1,131 +1,67 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, Pagination, Navigation } from "swiper/modules";
+import { Autoplay, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
-import "swiper/css/navigation";
-import Image from "next/image";
-import { Product } from "@/app/types";
 
-type ProductWithImages = Product & {
-  images: { src: string }[];
-};
-
-interface ProductCarouselProps {
-  products: Product[];
+interface TextCarouselProps {
+  texts?: string[];
 }
 
-const ProductCarousel: React.FC<ProductCarouselProps> = ({ products }) => {
-  const [phoneNumber, setPhoneNumber] = useState("3172250090");
-  const [colorWha, setColorWha] = useState("#25D366"); // Default WhatsApp green
-  const [colorText, setColorText] = useState("#ffffff"); // Default white text
-  const [name, setName] = useState("shoptiyo"); // Default white text
-
-  useEffect(() => {
-    const fetchPhone = async () => {
-      try {
-        const res = await fetch(
-          `https://vendetiyo.vercel.app/api/user?email=${process.env.userEmail}`
-        );
-        const data = await res.json();
-
-        if (data.user?.phone) {
-          const cleanPhone = data.user.phone.replace(/\D/g, "");
-          setPhoneNumber(cleanPhone);
-        }
-
-        if (data.user?.colorWha) {
-          setColorWha(data.user.colorWha);
-        }
-
-        if (data.user?.colorText) {
-          setColorText(data.user.colorText);
-        }
-        if (data.user?.name) {
-          setName(data.user.name);
-        }
-      } catch (error) {
-        console.error("Error completo:", error);
-      }
-    };
-    fetchPhone();
-  }, []);
-
-  const generateWhatsAppLink = (productName: string) => {
-    const encodedMessage = encodeURIComponent(
-      `Hola ${name}, quiero comprar ${productName} en talla:`
-    );
-    return `https://wa.me/+57${phoneNumber}?text=${encodedMessage}`;
-  };
-
-  const filteredProducts = products.filter(
-    (product): product is ProductWithImages =>
-      product.images !== undefined && product.images.length > 0
-  );
-
+const TextCarousel: React.FC<TextCarouselProps> = ({ 
+  texts = [
+    "¡Bienvenidos a nuestra tienda!",
+    "Los mejores productos al mejor precio",
+    "Envíos gratis a toda Colombia",
+    "Calidad garantizada en todos nuestros productos",
+    "¡Ofertas especiales todos los días!"
+  ]
+}) => {
   return (
-    <div className="container mx-auto px-4 py-8 overflow-hidden">
+    <div className="w-full py-4 bg-gradient-to-r from-blue-600 to-purple-600">
       <Swiper
-        spaceBetween={20}
-        slidesPerView={4}
+        spaceBetween={0}
+        slidesPerView={1}
         loop={true}
         autoplay={{
-          delay: 0,
+          delay: 3000,
           disableOnInteraction: false,
         }}
-        speed={5000}
-        freeMode={true}
-        grabCursor={true}
-        pagination={{ clickable: true }}
-        modules={[Autoplay, Pagination, Navigation]}
-        breakpoints={{
-          320: { slidesPerView: 2 },
-          640: { slidesPerView: 2 },
-          1024: { slidesPerView: 3 },
-          1280: { slidesPerView: 4 },
+        speed={1000}
+        pagination={{ 
+          clickable: true,
+          bulletClass: "swiper-pagination-bullet text-carousel-bullet",
+          bulletActiveClass: "swiper-pagination-bullet-active text-carousel-bullet-active"
         }}
-        className="!overflow-visible"
+        modules={[Autoplay, Pagination]}
+        className="text-carousel"
       >
-        {filteredProducts.map((product) => (
-          <SwiperSlide key={product.id} className="!h-auto">
-            <div className="border rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col h-full">
-              <div className="relative h-72 w-full">
-                <Image
-                  src={product.images[0].src}
-                  alt={product.name}
-                  fill
-                  style={{ objectFit: "cover" }}
-                  className="hover:scale-105 transition-transform duration-300"
-                  sizes="(max-width: 768px) 100vw, 33vw"
-                />
-              </div>
-
-              <div className="p-4 flex flex-col flex-grow">
-                <h3 className="text-lg font-semibold mb-4">{product.name}</h3>
-
-                <div className="mt-auto">
-                  <a
-                    href={generateWhatsAppLink(product.name)}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{
-                      backgroundColor: colorWha, // Color de fondo principal
-                      color: colorText, // Color del texto
-                    }}
-                    className="whatsapp-button block w-full text-center py-2 px-4 rounded-md transition-all duration-300 hover:bg-[#25d366] hover:text-white"
-                  >
-                    Comprar
-                  </a>
-                </div>
-              </div>
+        {texts.map((text, index) => (
+          <SwiperSlide key={index}>
+            <div className="text-center py-6 px-4">
+              <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-white">
+                {text}
+              </h2>
             </div>
           </SwiperSlide>
         ))}
       </Swiper>
+      
+      <style jsx global>{`
+        .text-carousel .swiper-pagination {
+          bottom: 10px;
+        }
+        .text-carousel-bullet {
+          background: rgba(255, 255, 255, 0.5) !important;
+          opacity: 1 !important;
+        }
+        .text-carousel-bullet-active {
+          background: white !important;
+        }
+      `}</style>
     </div>
-
   );
 };
 
-export default ProductCarousel;
+export default TextCarousel;

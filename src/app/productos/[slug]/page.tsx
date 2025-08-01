@@ -45,7 +45,7 @@ export default async function ProductPage(props: Props) {
             Lo sentimos, el producto que buscas no existe o ya no está disponible.
           </p>
           <a
-            href={`https://wa.me/3172250090?text=${encodeURIComponent(`Hola, busco el producto: ${slug.replace(/-/g, " ")} ¿Tienen disponibilidad?`)}`}
+            href={`https://wa.me/3022484816?text=${encodeURIComponent(`Hola, busco el producto: ${slug.replace(/-/g, " ")} ¿Tienen disponibilidad?`)}`}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-block w-full mb-3 px-6 py-3 bg-green-600 text-white font-medium rounded-lg hover:bg-green-700 transition-colors"
@@ -198,7 +198,7 @@ export default async function ProductPage(props: Props) {
 
             {/* WhatsApp Button */}
             <Link
-              href={`https://wa.me/3172250090?text=${encodeURIComponent(`Hola! Me interesa el producto: ${product.name} - $${product.price || product.regular_price}`)}`}
+              href={`https://wa.me/3022484816?text=${encodeURIComponent(`Hola! Me interesa el producto: ${product.name} - $${product.price || product.regular_price}`)}`}
               target="_blank"
               rel="noopener noreferrer"
               className="w-full bg-green-500 hover:bg-green-600 active:bg-green-700 text-white py-4 px-4 rounded-lg font-medium transition-all active:scale-95 flex items-center justify-center gap-3 text-base sm:text-lg touch-manipulation"
