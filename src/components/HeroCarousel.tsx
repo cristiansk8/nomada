@@ -25,11 +25,6 @@ export default function HeroCarousel() {
       src: "/Video_de_Skater_Generado.mp4",
       title: "Video de Skater",
     },
-    {
-      id: 4,
-      src: "/Video_de_Nomo_Mágico_Listo.mp4",
-      title: "Video de Nomo Mágico",
-    },
   ];
 
   return (

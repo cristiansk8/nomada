@@ -1,8 +1,8 @@
 import HeroCarousel from "@/components/HeroCarousel";
-import ProductCarousel from "@/components/ProductCarousel";
 import { Product } from "@/app/types";
 import api from "@/lib/woocommerce";
 import { Metadata } from "next";
+import TextCarousel from "@/components/ProductCarousel";
 
 export const metadata: Metadata = {
   title: 'Inicio | Shop - Viste Premium en Colombia',
@@ -50,22 +50,8 @@ export default async function Home() {
       {/* Hero Carousel - Slider de videos */}
       <HeroCarousel />
       
-      {/* Sección de productos destacados */}
-      {featuredProducts.length > 0 && (
-        <section className="py-12 sm:py-16 lg:py-20 bg-gray-50">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-8 sm:mb-12">
-              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
-                Productos Destacados
-              </h2>
-              <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto">
-                Descubre nuestra selección de productos premium
-              </p>
-            </div>
-            <ProductCarousel products={featuredProducts} />
-          </div>
-        </section>
-      )}
+      {/* Sección de categorias */}
+      <TextCarousel />
       
       {/* Mensaje temporal si no hay productos */}
       {featuredProducts.length === 0 && (
