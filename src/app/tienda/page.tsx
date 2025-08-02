@@ -3,6 +3,9 @@ import { Product } from "@/app/types";
 import api from "@/lib/woocommerce";
 import Link from "next/link";
 import Image from "next/image";
+import { getAjustedPrice } from '@/utils/price'; // Asegúrate de que la ruta sea correcta
+import { formatPrice } from "@/utils/miles";
+
 
 export const metadata: Metadata = {
   title: 'Productos | Tienda',
@@ -121,11 +124,10 @@ export default async function TiendaPage({ searchParams }: PageProps) {
           <div className="mt-4 flex flex-wrap gap-2">
             <Link
               href="/tienda"
-              className={`px-3 py-1 rounded-full text-sm transition-colors ${
-                !categoryId
-                  ? 'bg-blue-600 text-white'
-                  : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-              }`}
+              className={`px-3 py-1 rounded-full text-sm transition-colors ${!categoryId
+                ? 'bg-blue-600 text-white'
+                : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                }`}
             >
               Todas
             </Link>
@@ -133,11 +135,10 @@ export default async function TiendaPage({ searchParams }: PageProps) {
               <Link
                 key={category.id}
                 href={`/tienda?categoria=${category.id}`}
-                className={`px-3 py-1 rounded-full text-sm transition-colors ${
-                  categoryId === category.id.toString()
-                    ? 'bg-blue-600 text-white'
-                    : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                }`}
+                className={`px-3 py-1 rounded-full text-sm transition-colors ${categoryId === category.id.toString()
+                  ? 'bg-blue-600 text-white'
+                  : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                  }`}
               >
                 {category.name}
               </Link>
@@ -181,23 +182,23 @@ export default async function TiendaPage({ searchParams }: PageProps) {
                     {product.on_sale && product.sale_price !== product.regular_price ? (
                       <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-2">
                         <span className="text-base sm:text-lg font-bold text-red-600">
-                          ${product.sale_price}
+                          ${formatPrice( getAjustedPrice(product.sale_price))}
                         </span>
                         <span className="text-xs sm:text-sm text-gray-500 line-through">
-                          ${product.regular_price}
+                          ${formatPrice( getAjustedPrice(product.regular_price))}
                         </span>
                       </div>
                     ) : (
                       <span className="text-base sm:text-lg font-bold text-gray-900">
-                        ${product.price || product.regular_price}
+                        ${formatPrice( getAjustedPrice(product.price || product.regular_price))}
                       </span>
                     )}
+
                   </div>
-                  <span className={`text-xs px-2 py-1 rounded-full ${
-                    product.stock_status === 'instock'
-                      ? 'text-green-700 bg-green-100'
-                      : 'text-red-700 bg-red-100'
-                  }`}>
+                  <span className={`text-xs px-2 py-1 rounded-full ${product.stock_status === 'instock'
+                    ? 'text-green-700 bg-green-100'
+                    : 'text-red-700 bg-red-100'
+                    }`}>
                     {product.stock_status === 'instock' ? 'Disponible' : 'Agotado'}
                   </span>
                 </div>

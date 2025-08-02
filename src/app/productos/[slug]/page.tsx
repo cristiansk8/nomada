@@ -1,6 +1,9 @@
 import { getProductBySlug } from '@/app/actions/product/get-product.action';
 import Image from 'next/image';
 import Link from 'next/link';
+import { getAjustedPrice } from '@/utils/price'; // Asegúrate de que la ruta sea correcta
+import { formatPrice } from "@/utils/miles";
+
 
 // Prop types para Next.js 15
 interface Props {
@@ -155,20 +158,21 @@ export default async function ProductPage(props: Props) {
             {/* Price */}
             <div className="mb-6">
               {product.on_sale && product.sale_price !== product.regular_price ? (
-                <div className="flex items-center space-x-3">
-                  <span className="text-2xl lg:text-3xl font-bold text-red-600">
-                    ${product.sale_price}
+                <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-3">
+                  <span className="text-3xl sm:text-4xl font-extrabold text-red-600">
+                    <span className="text-green-600">$</span>{formatPrice(getAjustedPrice(product.sale_price))}
                   </span>
-                  <span className="text-lg lg:text-xl text-gray-500 line-through">
-                    ${product.regular_price}
+                  <span className="text-sm sm:text-base text-gray-500 line-through">
+                    <span className="text-gray-500">$</span>{formatPrice(getAjustedPrice(product.regular_price))}
                   </span>
                 </div>
               ) : (
-                <span className="text-2xl lg:text-3xl font-bold text-gray-900">
-                  ${product.price || product.regular_price || 'Consultar'}
+                <span className="text-3xl sm:text-4xl font-extrabold text-gray-900">
+                  <span className="text-green-600">$</span>{formatPrice(getAjustedPrice(product.price || product.regular_price))}
                 </span>
               )}
             </div>
+
 
             {/* Stock Status */}
             <div className="mb-6">
@@ -194,7 +198,7 @@ export default async function ProductPage(props: Props) {
                   ({product.stock_quantity} en stock)
                 </span>
               )}
-            </div> 
+            </div>
 
             {/* WhatsApp Button */}
             <Link
