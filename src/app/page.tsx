@@ -3,6 +3,7 @@ import { Product } from "@/app/types";
 import api from "@/lib/woocommerce";
 import { Metadata } from "next";
 import TextCarousel from "@/components/ProductCarousel";
+import N8nChatWidget from "@/components/N8nChatWidget";
 
 export const metadata: Metadata = {
   title: 'Inicio | Shop - Viste Premium en Colombia',
@@ -52,7 +53,7 @@ export default async function Home() {
       
       {/* Sección de categorias */}
       <TextCarousel />
-      
+      <N8nChatWidget />
       {/* Mensaje temporal si no hay productos */}
       {featuredProducts.length === 0 && (
         <div className="pt-20 sm:pt-24 pb-16 px-4 text-center bg-gray-50">
